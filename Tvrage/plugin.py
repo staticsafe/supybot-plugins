@@ -42,10 +42,22 @@ class Tvrage(callbacks.Plugin):
         """<show>
         Shows the next episode of show
         """
-        nextreply = tvrage.api.Show(show)
-        irc.reply(nextreply.next_episode)
+        nextreply = quickinfo.fetch(show)
+        nextinfo = nextreply['Next Episode']
+        properformat = "The next episode of {0} will air on {1} and will be episode {2} named {3}.".format(show, nextinfo[2], nextinfo[0], nextinfo[1]) 
+        irc.reply(properformat)
     nextepisode = wrap(nextepisode, ['text'])
+
+    def latestepisode(self, irc, msg, args, show):
+        """<show>
+        Shows info on the latest episode of show
+        """
+        latestreply = quickinfo.fetch(show)
+        latestinfo = latestreply['Latest Episode']
+        properformat = "The latest episode of {0} aired on {1} and was episode {2} named {3}.".format(show, latestinfo[2], latestinfo[0], latestinfo[1])
+        irc.reply(properformat)
+    latestepisode = wrap(latestepisode, ['text'])
 
 Class = Tvrage
 
-# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
+# vim:set shiftwidth=4 softtabstop=4 expandtab:
