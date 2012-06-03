@@ -1,4 +1,6 @@
-supybot-tvrage
+supybot-plugins
 ==============
 
-A tvrage plugin for supybot
+A repo for any supybot plugins I may develop.
+
+All code licensed under the Simplified BSD License.
