@@ -15,25 +15,16 @@ from tvrage import quickinfo
 import tvrage.api
 _ = PluginInternationalization('Tvrage')
 
+
 @internationalizeDocstring
 class Tvrage(callbacks.Plugin):
     """Add the help for "@plugin help Tvrage" here
     This should describe *how* to use this plugin."""
     threaded = True
-    
-    #def show(self, irc, msg, args, query):
-    #    """<show>
-
-    #    Shows the information about requested TV show.
-    #    """
-    #    answer = quickinfo.fetch(query)
-    #    irc.reply(answer)
-    #show = wrap(show, ['text'])
 
     def genre(self, irc, msg, args, show):
         """<show>
-        Shows the genre about TV show
-        """
+        Shows the genre about TV show"""
         genrereply = tvrage.api.Show(show)
         irc.reply(genrereply.genres)
     genre = wrap(genre, ['text'])
@@ -45,7 +36,9 @@ class Tvrage(callbacks.Plugin):
         nextreply = quickinfo.fetch(show)
         if 'Next Episode' in nextreply:
             nextinfo = nextreply['Next Episode']
-            properformat = "The next episode of {0} will air on {1} and will be episode {2} named {3}.".format(show, nextinfo[2], nextinfo[0], nextinfo[1]) 
+            properformat = ("The next episode of {0} will air on {1} and will \
+            be episode {2} named {3}.".format(show, nextinfo[2], nextinfo[0],
+                nextinfo[1]))
             irc.reply(properformat)
         else:
             irc.reply("There is no next episode info for {0}.".format(show))
@@ -58,12 +51,15 @@ class Tvrage(callbacks.Plugin):
         latestreply = quickinfo.fetch(show)
         if 'Latest Episode' in latestreply:
             latestinfo = latestreply['Latest Episode']
-            properformat = "The latest episode of {0} aired on {1} and was episode {2} named {3}.".format(show, latestinfo[2], latestinfo[0], latestinfo[1])
+            properformat = ("The latest episode of {0} aired on {1} and \
+            was episode {2} named {3}.".format(show, latestinfo[2],
+                latestinfo[0], latestinfo[1]))
             irc.reply(properformat)
         else:
-            irc.reply("There is no latest episode info available for {0}.".format(show))
+            irc.reply(("There is no latest episode info available for \
+                {0}.".format(show)))
     latestepisode = wrap(latestepisode, ['text'])
 
 Class = Tvrage
 
-# vim:set shiftwidth=4 softtabstop=4 expandtab:
+# vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
