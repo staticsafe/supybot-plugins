@@ -36,9 +36,9 @@ class Tvrage(callbacks.Plugin):
         nextreply = quickinfo.fetch(show)
         if 'Next Episode' in nextreply:
             nextinfo = nextreply['Next Episode']
-            properformat = ("The next episode of {0} will air on {1} and will \
-            be episode {2} named {3}.".format(show, nextinfo[2], nextinfo[0],
-                nextinfo[1]))
+            properformat = ("The next episode of {0} will air on {1} and \
+will be episode {2} named {3}.".format(show, nextinfo[2],
+nextinfo[0], nextinfo[1]))
             irc.reply(properformat)
         else:
             irc.reply("There is no next episode info for {0}.".format(show))
@@ -52,12 +52,12 @@ class Tvrage(callbacks.Plugin):
         if 'Latest Episode' in latestreply:
             latestinfo = latestreply['Latest Episode']
             properformat = ("The latest episode of {0} aired on {1} and \
-            was episode {2} named {3}.".format(show, latestinfo[2],
-                latestinfo[0], latestinfo[1]))
+was episode {2} named {3}.".format(show, latestinfo[2],
+latestinfo[0], latestinfo[1]))
             irc.reply(properformat)
         else:
             irc.reply(("There is no latest episode info available for \
-                {0}.".format(show)))
+{0}.".format(show)))
     latestepisode = wrap(latestepisode, ['text'])
 
 Class = Tvrage
