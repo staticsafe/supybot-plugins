@@ -30,7 +30,7 @@ class Catfacts(callbacks.Plugin):
 
         randomfact = random.choice(facts).encode("utf-8")
 
-        irc.reply(randomfact.strip('\n'))
+        irc.reply(randomfact.strip('\n')
 
 
 Class = Catfacts
