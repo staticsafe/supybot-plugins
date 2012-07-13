@@ -1,1 +1,4 @@
-Insert a description of your plugin here, with any notes, etc. about using it.
+Requirements (install using pip or easy_install):
+
+- python-tvrage
+- tvdb_api

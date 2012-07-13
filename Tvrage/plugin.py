@@ -13,6 +13,7 @@ import supybot.callbacks as callbacks
 from supybot.i18n import PluginInternationalization, internationalizeDocstring
 from tvrage import quickinfo
 import tvrage.api
+import tvdb_api
 _ = PluginInternationalization('Tvrage')
 
 
@@ -22,12 +23,20 @@ class Tvrage(callbacks.Plugin):
     This should describe *how* to use this plugin."""
     threaded = True
 
-    def genre(self, irc, msg, args, show):
-        """<show>
-        Shows the genre about TV show"""
-        genrereply = tvrage.api.Show(show)
-        irc.reply(genrereply.genres)
-    genre = wrap(genre, ['text'])
+    def showinfo(self, irc, msg, args, show):
+        """<info>
+        Returns some generic info about TV show"""
+        t = tvdb_api.Tvdb()
+        infoset = t[show]
+        network = infoset['network']
+        genre = infoset['genre']
+        status = infoset['status']
+        first = infoset['firstaired']
+        formatting = ("{0} is currently {1} on {2}. It first aired on {3} \
+and belongs in the following genre(s): {4}.".format(show, status, network, \
+first, genre))
+        irc.reply(formatting)
+    showinfo = wrap(showinfo, ['text'])
 
     def nextepisode(self, irc, msg, args, show):
         """<show>
