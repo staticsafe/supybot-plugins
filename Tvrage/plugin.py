@@ -14,8 +14,17 @@ from supybot.i18n import PluginInternationalization, internationalizeDocstring
 from tvrage import quickinfo
 import tvrage.api
 import tvdb_api
+import dateutil.parser
+import pytz
+import datetime
 _ = PluginInternationalization('Tvrage')
 
+def timeremaining(rfctime):
+    # a small function to determine time remaining
+    show_start = dateutil.parser.parse(rfctime)
+    now = datetime.datetime.now(pytz.timezone("EST"))
+    time_remaining = show_start - now
+    return time_remaining
 
 @internationalizeDocstring
 class Tvrage(callbacks.Plugin):
@@ -45,9 +54,10 @@ first, genre))
         nextreply = quickinfo.fetch(show)
         if 'Next Episode' in nextreply:
             nextinfo = nextreply['Next Episode']
+            rfcvalue = nextreply['RFC3339']
             properformat = ("The next episode of {0} will air on {1} and \
-will be episode {2} named {3}.".format(show, nextinfo[2],
-nextinfo[0], nextinfo[1]))
+will be episode {2} named {3}. Time remaining until show airs: {4}".format(show, nextinfo[2],
+nextinfo[0], nextinfo[1], timeremaining(rfcvalue)))
             irc.reply(properformat)
         else:
             irc.reply("There is no next episode info for {0}.".format(show))
