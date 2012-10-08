@@ -52,7 +52,7 @@ first, genre))
         Shows the next episode of show
         """
         nextreply = quickinfo.fetch(show)
-        if 'Next Episode' in nextreply:
+        if 'Next Episode' in nextreply and 'RFC3339' in nextreply:
             nextinfo = nextreply['Next Episode']
             rfcvalue = nextreply['RFC3339']
             properformat = ("The next episode of {0} will air on {1} and \
