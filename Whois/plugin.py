@@ -33,7 +33,7 @@ class Whois(callbacks.Plugin):
         creation_date = creation_date.isoformat()
         expiration_date = results["expiration_date"].pop()
         expiration_date = expiration_date.isoformat()
-        nameservers = results["nameservers"]
+        nameservers = ", ".join(results["nameservers"]).rstrip(", ")
         registrar = results["registrar"].pop()
         registrant = results["contacts"].get("admin").get("name")
         contact_email = results["contacts"].get("admin").get("email")
