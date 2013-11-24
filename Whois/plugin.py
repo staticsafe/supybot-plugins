@@ -11,6 +11,7 @@ import supybot.plugins as plugins
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
 import pythonwhois
+import datetime
 try:
     from supybot.i18n import PluginInternationalization
     _ = PluginInternationalization('Whois')
@@ -28,10 +29,12 @@ class Whois(callbacks.Plugin):
         """<whois>
         Returns information about a domain"""
         results = pythonwhois.get_whois(domain, normalized=True)
-        creation_date = results["creation_date"]
-        expiration_date = results["expiration_date"]
+        creation_date = results["creation_date"].pop()
+        creation_date = creation_date.isoformat()
+        expiration_date = results["expiration_date"].pop()
+        expiration_date = expiration_date.isoformat()
         nameservers = results["nameservers"]
-        registrar = results["registrar"]
+        registrar = results["registrar"].pop()
         registrant = results["contacts"].get("admin").get("name")
         contact_email = results["contacts"].get("admin").get("email")
         formatting = ("The domain {0} was registered on {1} by {2} via {3}, expires on \
