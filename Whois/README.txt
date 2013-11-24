@@ -1,1 +1,4 @@
-Insert a description of your plugin here, with any notes, etc. about using it.
+Displays WHOIS data for domains.
+
+Dependencies:
+- pythonwhois (by @joepie91)
