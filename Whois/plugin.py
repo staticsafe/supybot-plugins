@@ -24,6 +24,24 @@ class Whois(callbacks.Plugin):
     This should describe *how* to use this plugin."""
     threaded = True
 
+    def whois(self, irc, msg, args, domain):
+        """<whois>
+        Returns information about a domain"""
+        results = pythonwhois.get_whois(domain, normalized=True)
+        creation_date = results["creation_date"]
+        expiration_date = results["expiration_date"]
+        nameservers = results["nameservers"]
+        registrar = results["registrar"]
+        registrant = results["contacts"].get("admin").get("name")
+        contact_email = results["contacts"].get("admin").get("email")
+        formatting = ("The domain {0} was registered on {1} by {2} via {3}, expires on \
+{4}, nameservers are {5}, contact e-mail is {6}.".format(domain, \
+creation_date, registrant, registrar, expiration_date, nameservers, \
+contact_email))
+        irc.reply(formatting)
+    whois = wrap(whois, ['text'])
+
+
 
 Class = Whois
 
